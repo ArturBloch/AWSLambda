@@ -1,0 +1,5 @@
+model\ExchangeRate.class
+lambdas\ScheduledHandler.class
+model\ExchangeRateDTO.class
+repository\ExchangeRepository.class
+lambdas\ExchangeQueryHandler.class
