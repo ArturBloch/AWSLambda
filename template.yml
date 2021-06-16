@@ -9,4 +9,3 @@ Resources:
       Runtime: java11
       MemorySize: 512
       Timeout: 45
-      Role: arn:aws:iam::542069312762:role/lambdaDeploy-CurrencyExchangeRole-1C6ESYKMP459V

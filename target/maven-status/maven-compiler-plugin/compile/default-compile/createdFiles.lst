@@ -1,7 +1,0 @@
-model\ExchangeRate.class
-lambdas\ScheduledHandler.class
-database\DynamoDBHandler.class
-database\DynamoDBHandler$1.class
-model\ExchangeRateDTO.class
-repository\ExchangeRepository.class
-lambdas\ExchangeQueryHandler.class
