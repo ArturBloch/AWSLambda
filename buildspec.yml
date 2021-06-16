@@ -9,12 +9,12 @@ phases:
       - java -version
       - mvn package shade:shade
       - mv target/AWSLambda-1.0-SNAPSHOT.jar .
-      - unzip AWSLambda-1.0-SNAPSHOT.jar
       - rm -r target
       - aws cloudformation package --template-file template.yml --s3-bucket lambdaprojekt --output-template-file outputtemplate.yml
 artifacts:
   type: zip
   files:
-  - template.yml
+  - AWSLambda-1.0-SNAPSHOT.jar
+  discard-paths: yes
   - outputtemplate.yml
 

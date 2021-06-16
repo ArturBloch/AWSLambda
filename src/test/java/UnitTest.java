@@ -4,8 +4,8 @@ import lambdas.ExchangeQueryHandler;
 public class UnitTest {
 
 	public static void main(String[] args) throws JsonProcessingException {
-		ExchangeQueryHandler exchangeQueryHandler = new ExchangeQueryHandler();
-		exchangeQueryHandler.handleRequest();
+//		ExchangeQueryHandler exchangeQueryHandler = new ExchangeQueryHandler();
+//		exchangeQueryHandler.handleRequest();
 
 //		ScheduledHandler scheduledHandler = new ScheduledHandler();
 //		try {

@@ -1,5 +1,6 @@
 package lambdas;
 
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.ExchangeRate;
 import model.ExchangeRateDTO;
@@ -21,7 +22,7 @@ public class ScheduledHandler{
 
 	private static final Logger logger = LogManager.getLogger(ScheduledHandler.class);
 
-		public void handleRequest() throws IOException {
+		public APIGatewayProxyResponseEvent handleRequest() throws IOException {
 
 		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=17b14b138c454ea99a0b54c22ce946e2");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -39,6 +40,7 @@ public class ScheduledHandler{
 
 		List<ExchangeRateDTO> exchangeRateBatch = getExchangeRateRecords(parsed);
 
+		return new APIGatewayProxyResponseEvent().withIsBase64Encoded(false).withBody("Successful database insert").withStatusCode(200);
 	}
 
 	public List<ExchangeRateDTO> getExchangeRateRecords(ExchangeRate parsed) {

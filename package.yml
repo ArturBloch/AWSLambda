@@ -5,8 +5,9 @@ Resources:
   CurrencyExchange:
     Type: AWS::Serverless::Function
     Properties:
-      Handler:  lambdas.ScheduledHandler::handleRequest
+      Handler: lambdas.ScheduledHandler::handleRequest
       Runtime: java11
+      CodeUri: s3://lambdaprojekt/61932bb6d9c6f9d46f68852610e6638a
       MemorySize: 512
       Timeout: 45
       Role: arn:aws:iam::542069312762:role/lambdaDeploy-CurrencyExchangeRole-1C6ESYKMP459V
