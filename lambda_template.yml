@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS lambda deployment
+Resources:
+  ExchangeApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler:  lambdas.ExchangeQueryHandler::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Timeout: 45
+  ScheduledExchangeQuery:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdas.ScheduledHandler::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Timeout: 45

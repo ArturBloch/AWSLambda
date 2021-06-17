@@ -10,12 +10,10 @@ phases:
       - mvn package shade:shade
       - mv target/AWSLambda-1.0-SNAPSHOT.jar .
       - unzip AWSLambda-1.0-SNAPSHOT.jar
-      - ls
-      - rm -rf target src logs buildspec.yml pom.xml AWSLambda-1.0-SNAPSHOT.jar
-      - aws cloudformation package --template-file template.yml --s3-bucket lambdaprojekt --output-template-file outputtemplate.yml
+      - rm -rf target src logs lambdabuild.yml pom.xml AWSLambda-1.0-SNAPSHOT.jar
+      - aws cloudformation package --template-file lambda_template.yml --s3-bucket lambdaprojekt --output-template-file out_lambda_template.yml
 artifacts:
   type: zip
   files:
-  - outputtemplate.yml
-  - template.yml
+    - out_lambda_template.yml
 
