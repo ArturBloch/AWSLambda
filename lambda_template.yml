@@ -9,10 +9,23 @@ Resources:
       Runtime: java11
       MemorySize: 512
       Timeout: 45
+      Events:
+        ApiGate:
+          Type: Api
+          Properties:
+            Path: /lambdaQuery
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
   ScheduledExchangeQuery:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lambdas.ScheduledHandler::handleRequest
       Runtime: java11
       MemorySize: 512
-      Timeout: 45
+      Timeout: 60
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(10 0/4 * * ? *)

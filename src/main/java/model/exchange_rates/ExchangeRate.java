@@ -1,4 +1,4 @@
-package model;
+package model.exchange_rates;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

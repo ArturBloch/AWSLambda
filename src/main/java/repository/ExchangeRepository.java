@@ -2,11 +2,9 @@ package repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
-import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import database.DynamoDBHandler;
-import model.ExchangeRateDTO;
+import model.exchange_rates.ExchangeRateDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExchangeRepository {

@@ -2,8 +2,8 @@ package lambdas;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.ExchangeRate;
-import model.ExchangeRateDTO;
+import model.exchange_rates.ExchangeRate;
+import model.exchange_rates.ExchangeRateDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import repository.ExchangeRepository;
