@@ -13,7 +13,22 @@ Resources:
         ApiGate:
           Type: Api
           Properties:
-            Path: /lambdaQuery
+            Path: /currExchangeQuery
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+  CryptoAPI:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdas.CryptoQueryHandler::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Timeout: 45
+      Events:
+        ApiGate:
+          Type: Api
+          Properties:
+            Path: /cryptoQuery
             Method: GET
             Auth:
               ApiKeyRequired: true
