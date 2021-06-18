@@ -1,5 +1,7 @@
 package lambdas;
 
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +16,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,12 +28,21 @@ import java.util.Map;
 public class CryptoQueryHandler {
 
 	private static String apiKey = "b3979357-92d6-429c-85a3-8fb755cb9852";
+	private static final Logger logger = LogManager.getLogger(ExchangeQueryHandler.class);
 
-	public APIGatewayProxyResponseEvent handleRequest(int top) throws JsonProcessingException {
+	public APIGatewayProxyResponseEvent handleRequest(Map<String,Object> input, Context context){
+		logger.info("Incoming map size {}", input.size());
+		int topCount = 20;
+
+		if(input.containsKey("top") && input.get("top") instanceof Integer){
+			topCount = (int)input.get("top");
+		}
+
 		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
+
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("start", "1"));
-		params.add(new BasicNameValuePair("limit", "" + top));
+		params.add(new BasicNameValuePair("limit", "" + topCount));
 		params.add(new BasicNameValuePair("convert", "USD"));
 
 		try {

@@ -1,6 +1,4 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lambdas.CryptoQueryHandler;
-import lambdas.ExchangeQueryHandler;
 
 public class UnitTest {
 
@@ -9,7 +7,7 @@ public class UnitTest {
 //		exchangeQueryHandler.handleRequest();
 
 //		CryptoQueryHandler cryptoQueryHandler = new CryptoQueryHandler();
-//		cryptoQueryHandler.handleRequest(20);
+//		cryptoQueryHandler.handleRequest(new IncomingRequest(20));
 
 //		ScheduledHandler scheduledHandler = new ScheduledHandler();
 //		try {
