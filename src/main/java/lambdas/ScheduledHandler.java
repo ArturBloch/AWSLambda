@@ -24,7 +24,7 @@ public class ScheduledHandler{
 
 		public APIGatewayProxyResponseEvent handleRequest() throws IOException {
 
-		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=17b14b138c454ea99a0b54c22ce946e2");
+		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=" + System.getenv("exchange_key"));
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Accept", "application/xml");

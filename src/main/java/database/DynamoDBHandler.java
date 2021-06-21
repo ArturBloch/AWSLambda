@@ -22,8 +22,7 @@ public class DynamoDBHandler {
 			                                  new AwsClientBuilder.EndpointConfiguration("dynamodb.eu-central-1.amazonaws.com",
 			                                                                             "eu-central-1"))
 		                                  .withCredentials(new AWSStaticCredentialsProvider(
-			                                  new BasicAWSCredentials("AKIAX4NOZJT5F6DFWNQO",
-			                                                          "02AHxlNwnb48Nhh01cmj5w6ND8sMW5DzwCH55UCc")) {
+			                                  new BasicAWSCredentials(System.getenv("access_key"),System.getenv("secret_key"))) {
 		                                  })
 		                                  .build();
 	}
