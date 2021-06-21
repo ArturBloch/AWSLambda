@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class CryptoQueryHandler {
 
-	private static String apiKey = "b3979357-92d6-429c-85a3-8fb755cb9852";
+	private static String apiKey = System.getenv("API_KEY");
 	private static final Logger logger = LogManager.getLogger(ExchangeQueryHandler.class);
 
 	public APIGatewayProxyResponseEvent handleRequest(Map<String,Object> input, Context context){
