@@ -1,9 +1,7 @@
 package lambdas;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.crypto_currency.*;
 import org.apache.http.HttpEntity;
@@ -27,79 +25,76 @@ import java.util.Map;
 
 public class CryptoQueryHandler {
 
-	private static String apiKey = System.getenv("API_KEY");
-	private static final Logger logger = LogManager.getLogger(ExchangeQueryHandler.class);
+    private final String apiKey = System.getenv("API_KEY");
+    private final Logger logger = LogManager.getLogger(CryptoQueryHandler.class);
 
-	public APIGatewayProxyResponseEvent handleRequest(Map<String,Object> input, Context context){
-		logger.info("Incoming map size {}", input.size());
-		int topCount = 20;
+    public APIGatewayProxyResponseEvent handleRequest(Map<String, Object> input, Context context) {
+        logger.info("Incoming map size {}", input.size());
+        int topCount = 20;
 
-		if(input.containsKey("top") && input.get("top") instanceof Integer){
-			topCount = (int)input.get("top");
-		}
+        if (input.containsKey("top") && input.get("top") instanceof Integer) {
+            topCount = (int) input.get("top");
+        }
 
-		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
+        String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
 
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("start", "1"));
-		params.add(new BasicNameValuePair("limit", "" + topCount));
-		params.add(new BasicNameValuePair("convert", "USD"));
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("start", "1"));
+        params.add(new BasicNameValuePair("limit", "" + topCount));
+        params.add(new BasicNameValuePair("convert", "USD"));
 
-		try {
-			String result = makeAPICall(uri, params);
-			ObjectMapper mapper = new ObjectMapper();
-			CryptoRequest parsed = mapper.readValue(result, CryptoRequest.class);
-			List<CryptoDTO> cryptoReturn = new ArrayList<>();
-			for (CryptoData cryptoData : parsed.data) {
-				CryptoDTO cryptoDTO = new CryptoDTO(cryptoData.id, cryptoData.name, cryptoData.symbol, cryptoData.last_updated);
-				for (Map.Entry<String, ValueModel> quoteEntry : cryptoData.quote.entrySet()) {
-					CryptoExchangeDTO cryptoExchangeDTO = new CryptoExchangeDTO(quoteEntry.getKey(), quoteEntry.getValue().getPrice(),
-					                                                            quoteEntry.getValue().getPercent_change_1h(),
-					                                                            quoteEntry.getValue().getPercent_change_24h());
-					cryptoDTO.exchanges.add(cryptoExchangeDTO);
-				}
-				cryptoReturn.add(cryptoDTO);
-			}
+        try {
+            String result = makeAPICall(uri, params);
+            ObjectMapper mapper = new ObjectMapper();
+            CryptoRequest parsed = mapper.readValue(result, CryptoRequest.class);
+            List<CryptoDTO> cryptoReturn = new ArrayList<>();
+            for (CryptoData cryptoData : parsed.getData()) {
+                CryptoDTO cryptoDTO = new CryptoDTO(cryptoData.getId(), cryptoData.getName(), cryptoData.getSymbol(), cryptoData.getLastUpdated());
+                for (Map.Entry<String, ValueModel> quoteEntry : cryptoData.getQuote().entrySet()) {
+                    CryptoExchangeDTO cryptoExchangeDTO = new CryptoExchangeDTO(quoteEntry.getKey(), quoteEntry.getValue().getPrice(),
+                            quoteEntry.getValue().getPercentChange1H(),
+                            quoteEntry.getValue().getPercentChange24H());
+                    cryptoDTO.getExchanges().add(cryptoExchangeDTO);
+                }
+                cryptoReturn.add(cryptoDTO);
+            }
 
-			APIGatewayProxyResponseEvent test = new APIGatewayProxyResponseEvent().withStatusCode(200)
-			                                                                      .withBody(mapper.writeValueAsString(cryptoReturn))
-			                                                                      .withIsBase64Encoded(false);
+            return new APIGatewayProxyResponseEvent().withStatusCode(200)
+                    .withBody(mapper.writeValueAsString(cryptoReturn))
+                    .withIsBase64Encoded(false);
+        } catch (IOException e) {
+            logger.error("Error: cannot access content - {}", e.toString());
+        }
 
-			return test;
-		} catch (IOException e) {
-			System.out.println("Error: cannot access content - " + e.toString());
-		} catch (URISyntaxException e) {
-			System.out.println("Error: Invalid URL " + e.toString());
-		}
+        return new APIGatewayProxyResponseEvent().withStatusCode(400).withBody("").withIsBase64Encoded(false);
+    }
 
-		return new APIGatewayProxyResponseEvent().withStatusCode(400).withBody("").withIsBase64Encoded(false);
-	}
+    public String makeAPICall(String uri, List<NameValuePair> parameters) {
+        String response_content = "";
 
-	public String makeAPICall(String uri, List<NameValuePair> parameters) throws URISyntaxException, IOException {
-		String response_content = "";
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            URIBuilder query = new URIBuilder(uri);
 
-		URIBuilder query = new URIBuilder(uri);
-		query.addParameters(parameters);
+            query.addParameters(parameters);
 
-		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet request = new HttpGet(query.build());
+            HttpGet request = new HttpGet(query.build());
 
-		request.setHeader(HttpHeaders.ACCEPT, "application/json");
-		request.addHeader("X-CMC_PRO_API_KEY", apiKey);
+            request.setHeader(HttpHeaders.ACCEPT, "application/json");
+            request.addHeader("X-CMC_PRO_API_KEY", apiKey);
 
-		CloseableHttpResponse response = client.execute(request);
+            CloseableHttpResponse response = client.execute(request);
+            logger.info(response.getStatusLine());
+            HttpEntity entity = response.getEntity();
+            response_content = EntityUtils.toString(entity);
+            EntityUtils.consume(entity);
+        } catch (IOException e) {
+            logger.error("Error while making an API call; {}", e.toString());
+        } catch (URISyntaxException e) {
+            logger.error("Error: cannot create the URI - {}", e.toString());
+        }
 
-		try {
-			System.out.println(response.getStatusLine());
-			HttpEntity entity = response.getEntity();
-			response_content = EntityUtils.toString(entity);
-			EntityUtils.consume(entity);
-		} finally {
-			response.close();
-		}
-
-		return response_content;
-	}
+        return response_content;
+    }
 
 }
 

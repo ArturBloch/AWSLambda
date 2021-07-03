@@ -3,15 +3,16 @@ package model.crypto_currency;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CryptoData {
-	public int id;
-	public String name;
-	public String symbol;
-	public String last_updated;
-	public int cmc_rank;
-	public HashMap<String, ValueModel> quote;
+	private int id;
+	private String name;
+	private String symbol;
+	private String lastUpdated;
+	private int cmcRank;
+	private Map<String, ValueModel> quote;
 
 	public CryptoData() {
 	}
@@ -43,29 +44,29 @@ public class CryptoData {
 		return this;
 	}
 
-	public String getLast_updated() {
-		return last_updated;
+	public String getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public CryptoData setLast_updated(String last_updated) {
-		this.last_updated = last_updated;
+	public CryptoData setLastUpdated(String lastUpdated) {
+		this.lastUpdated = lastUpdated;
 		return this;
 	}
 
-	public int getCmc_rank() {
-		return cmc_rank;
+	public int getCmcRank() {
+		return cmcRank;
 	}
 
-	public CryptoData setCmc_rank(int cmc_rank) {
-		this.cmc_rank = cmc_rank;
+	public CryptoData setCmcRank(int cmcRank) {
+		this.cmcRank = cmcRank;
 		return this;
 	}
 
-	public HashMap<String, ValueModel> getQuote() {
+	public Map<String, ValueModel> getQuote() {
 		return quote;
 	}
 
-	public CryptoData setQuote(HashMap<String, ValueModel> quote) {
+	public CryptoData setQuote(Map<String, ValueModel> quote) {
 		this.quote = quote;
 		return this;
 	}

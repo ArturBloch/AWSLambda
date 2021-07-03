@@ -9,36 +9,36 @@ import java.util.List;
 
 public class ExchangeRepository {
 
-	private static ExchangeRepository instance;
+    private static ExchangeRepository instance;
 
-	public ExchangeRateDTO save(ExchangeRateDTO exchangeRateDTO) {
-		DynamoDBHandler.getInstance().dynamoDBMapper.save(exchangeRateDTO);
-		return exchangeRateDTO;
-	}
+    public ExchangeRateDTO save(ExchangeRateDTO exchangeRateDTO) {
+        DynamoDBHandler.getInstance().getDynamoDBMapper().save(exchangeRateDTO);
+        return exchangeRateDTO;
+    }
 
-	public List<ExchangeRateDTO> batchSave(List<ExchangeRateDTO> exchangeRates) {
-		DynamoDBHandler.getInstance().dynamoDBMapper.batchSave(exchangeRates);
-		return exchangeRates;
-	}
+    public List<ExchangeRateDTO> batchSave(List<ExchangeRateDTO> exchangeRates) {
+        DynamoDBHandler.getInstance().getDynamoDBMapper().batchSave(exchangeRates);
+        return exchangeRates;
+    }
 
-	public ExchangeRateDTO getExchangeRateDynamoById(String exchangeRateDynamoId) {
-		return DynamoDBHandler.getInstance().dynamoDBMapper.load(ExchangeRateDTO.class, exchangeRateDynamoId);
-	}
+    public ExchangeRateDTO getExchangeRateDynamoById(String exchangeRateDynamoId) {
+        return DynamoDBHandler.getInstance().getDynamoDBMapper().load(ExchangeRateDTO.class, exchangeRateDynamoId);
+    }
 
-	public PaginatedQueryList<ExchangeRateDTO> findByExchangeDate(String exchangeDateHashKey) {
-		ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
-		exchangeRateDTO.exchangeDate = exchangeDateHashKey;
+    public PaginatedQueryList<ExchangeRateDTO> findByExchangeDate(String exchangeDateHashKey) {
+        ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
+        exchangeRateDTO.setExchangeDate(exchangeDateHashKey);
 
-		DynamoDBQueryExpression<ExchangeRateDTO> queryExpression = new DynamoDBQueryExpression<ExchangeRateDTO>().withHashKeyValues(
-			exchangeRateDTO);
+        DynamoDBQueryExpression<ExchangeRateDTO> queryExpression = new DynamoDBQueryExpression<ExchangeRateDTO>().withHashKeyValues(
+                exchangeRateDTO);
 
-		return DynamoDBHandler.getInstance().dynamoDBMapper.query(ExchangeRateDTO.class, queryExpression);
-	}
+        return DynamoDBHandler.getInstance().getDynamoDBMapper().query(ExchangeRateDTO.class, queryExpression);
+    }
 
-	public static synchronized ExchangeRepository getInstance() {
-		if(instance == null){
-			instance = new ExchangeRepository();
-		}
-		return instance;
-	}
+    public static synchronized ExchangeRepository getInstance() {
+        if (instance == null) {
+            instance = new ExchangeRepository();
+        }
+        return instance;
+    }
 }

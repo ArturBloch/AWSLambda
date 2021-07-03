@@ -7,7 +7,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CryptoRequest {
-	public List<CryptoData> data = new ArrayList<>();
+	private List<CryptoData> data = new ArrayList<>();
 
 	public CryptoRequest() {
 	}

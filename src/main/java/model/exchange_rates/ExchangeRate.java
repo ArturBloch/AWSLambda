@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExchangeRate {
 
-	String base;
-	long timestamp;
-	HashMap<String, BigDecimal> rates = new HashMap<>();
+	private String base;
+	private long timestamp;
+	private Map<String, BigDecimal> rates = new HashMap<>();
 
 	public ExchangeRate() {
 	}
@@ -20,7 +21,7 @@ public class ExchangeRate {
 		this.timestamp = timestamp;
 	}
 
-	public ExchangeRate(String base, long timestamp, HashMap<String, BigDecimal> rates) {
+	public ExchangeRate(String base, long timestamp, Map<String, BigDecimal> rates) {
 		this.base      = base;
 		this.timestamp = timestamp;
 		this.rates     = rates;
@@ -44,11 +45,11 @@ public class ExchangeRate {
 		return this;
 	}
 
-	public HashMap<String, BigDecimal> getRates() {
+	public Map<String, BigDecimal> getRates() {
 		return rates;
 	}
 
-	public ExchangeRate setRates(HashMap<String, BigDecimal> rates) {
+	public ExchangeRate setRates(Map<String, BigDecimal> rates) {
 		this.rates = rates;
 		return this;
 	}

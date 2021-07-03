@@ -1,33 +1,31 @@
 package model.crypto_currency;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class CryptoDTO {
-	public int id;
-	public String name;
-	public String symbol;
-	public String last_updated;
-	public List<CryptoExchangeDTO> exchanges = new ArrayList<>();
+	private int id;
+	private String name;
+	private String symbol;
+	private String lastUpdated;
+	private List<CryptoExchangeDTO> exchanges = new ArrayList<>();
 
-	public CryptoDTO(int id, String name, String symbol, String last_updated, List<CryptoExchangeDTO> exchanges) {
+	public CryptoDTO(int id, String name, String symbol, String lastUpdated, List<CryptoExchangeDTO> exchanges) {
 		this.id           = id;
 		this.name         = name;
 		this.symbol       = symbol;
-		this.last_updated = last_updated;
+		this.lastUpdated = lastUpdated;
 		this.exchanges    = exchanges;
 	}
 
 	public CryptoDTO() {
 	}
 
-	public CryptoDTO(int id, String name, String symbol, String last_updated) {
+	public CryptoDTO(int id, String name, String symbol, String lastUpdated) {
 		this.id           = id;
 		this.name         = name;
 		this.symbol       = symbol;
-		this.last_updated = last_updated;
+		this.lastUpdated = lastUpdated;
 	}
 
 	public int getId() {
@@ -57,12 +55,12 @@ public class CryptoDTO {
 		return this;
 	}
 
-	public String getLast_updated() {
-		return last_updated;
+	public String getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public CryptoDTO setLast_updated(String last_updated) {
-		this.last_updated = last_updated;
+	public CryptoDTO setLastUpdated(String lastUpdated) {
+		this.lastUpdated = lastUpdated;
 		return this;
 	}
 

@@ -3,26 +3,19 @@ package model.crypto_currency;
 import java.math.BigDecimal;
 
 public class CryptoExchangeDTO {
-	String currencyName;
-	BigDecimal exchangeValue;
-	String percent_change_1h;
-	String percent_change_24h;
+	private String currencyName;
+	private BigDecimal exchangeValue;
+	private String percentChange1H;
+	private String percentChange24H;
 
 	public CryptoExchangeDTO() {
 	}
 
-	public CryptoExchangeDTO(String currencyName, String exchangeValue, String percent_change_1h, String percent_change_24h) {
+	public CryptoExchangeDTO(String currencyName, String exchangeValue, String percentChange1H, String percentChange24H) {
 		this.currencyName       = currencyName;
 		this.exchangeValue      = new BigDecimal(exchangeValue);
-		this.percent_change_1h  = percent_change_1h;
-		this.percent_change_24h = percent_change_24h;
-	}
-
-	public CryptoExchangeDTO(String currencyName, BigDecimal exchangeValue, String percent_change_1h, String percent_change_24h) {
-		this.currencyName       = currencyName;
-		this.exchangeValue      = exchangeValue;
-		this.percent_change_1h  = percent_change_1h;
-		this.percent_change_24h = percent_change_24h;
+		this.percentChange1H = percentChange1H;
+		this.percentChange24H = percentChange24H;
 	}
 
 	public String getCurrencyName() {
@@ -43,21 +36,21 @@ public class CryptoExchangeDTO {
 		return this;
 	}
 
-	public String getPercent_change_1h() {
-		return percent_change_1h;
+	public String getPercentChange1H() {
+		return percentChange1H;
 	}
 
-	public CryptoExchangeDTO setPercent_change_1h(String percent_change_1h) {
-		this.percent_change_1h = percent_change_1h;
+	public CryptoExchangeDTO setPercentChange1H(String percentChange1H) {
+		this.percentChange1H = percentChange1H;
 		return this;
 	}
 
-	public String getPercent_change_24h() {
-		return percent_change_24h;
+	public String getPercentChange24H() {
+		return percentChange24H;
 	}
 
-	public CryptoExchangeDTO setPercent_change_24h(String percent_change_24h) {
-		this.percent_change_24h = percent_change_24h;
+	public CryptoExchangeDTO setPercentChange24H(String percentChange24H) {
+		this.percentChange24H = percentChange24H;
 		return this;
 	}
 }
